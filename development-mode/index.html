@@ -1,0 +1,240 @@
+<title>Development Mode — 실전 홈페이지 제작</title>
+<style>
+  :root {
+    --bg: #f5f2f0; --surface: #ffffff; --surface-2: #ede7e3;
+    --ink: #241a15; --ink-dim: #63534a; --ink-faint: #8d7a70; --border: #e1d5cd;
+    --accent: #a8472e; --accent-ink: #7a3018; --accent-soft: #f2ded4;
+
+    --cat-setup: #6b5b8f; --cat-setup-soft: #ece8f4;
+    --cat-fe: #2f7a8c; --cat-fe-soft: #e2eef1;
+    --cat-be: #5c7a3d; --cat-be-soft: #eaf0e0;
+    --cat-db: #3a5a78; --cat-db-soft: #e3e9ef;
+    --cat-test: #8a4f6b; --cat-test-soft: #f2e5eb;
+    --cat-deploy: #a8472e; --cat-deploy-soft: #f2ded4;
+
+    --shadow: 0 1px 2px rgba(36,26,21,0.06), 0 6px 20px -8px rgba(36,26,21,0.14);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #17110e; --surface: #201815; --surface-2: #291f1a;
+      --ink: #f1e7e2; --ink-dim: #c2a99e; --ink-faint: #8d766c; --border: #362822;
+      --accent: #e08a68; --accent-ink: #f6d6c8; --accent-soft: #3a241c;
+      --cat-setup: #a698d0; --cat-setup-soft: #26223a;
+      --cat-fe: #6fb9cc; --cat-fe-soft: #17282b;
+      --cat-be: #9bc26e; --cat-be-soft: #1f2618;
+      --cat-db: #7fa5c9; --cat-db-soft: #1a2530;
+      --cat-test: #cc8aab; --cat-test-soft: #2b1e26;
+      --cat-deploy: #e08a68; --cat-deploy-soft: #3a241c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #17110e; --surface: #201815; --surface-2: #291f1a;
+    --ink: #f1e7e2; --ink-dim: #c2a99e; --ink-faint: #8d766c; --border: #362822;
+    --accent: #e08a68; --accent-ink: #f6d6c8; --accent-soft: #3a241c;
+    --cat-setup: #a698d0; --cat-setup-soft: #26223a;
+    --cat-fe: #6fb9cc; --cat-fe-soft: #17282b;
+    --cat-be: #9bc26e; --cat-be-soft: #1f2618;
+    --cat-db: #7fa5c9; --cat-db-soft: #1a2530;
+    --cat-test: #cc8aab; --cat-test-soft: #2b1e26;
+    --cat-deploy: #e08a68; --cat-deploy-soft: #3a241c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.5);
+  }
+  :root[data-theme="light"] {
+    --bg: #f5f2f0; --surface: #ffffff; --surface-2: #ede7e3;
+    --ink: #241a15; --ink-dim: #63534a; --ink-faint: #8d7a70; --border: #e1d5cd;
+    --accent: #a8472e; --accent-ink: #7a3018; --accent-soft: #f2ded4;
+    --cat-setup: #6b5b8f; --cat-setup-soft: #ece8f4;
+    --cat-fe: #2f7a8c; --cat-fe-soft: #e2eef1;
+    --cat-be: #5c7a3d; --cat-be-soft: #eaf0e0;
+    --cat-db: #3a5a78; --cat-db-soft: #e3e9ef;
+    --cat-test: #8a4f6b; --cat-test-soft: #f2e5eb;
+    --cat-deploy: #a8472e; --cat-deploy-soft: #f2ded4;
+    --shadow: 0 1px 2px rgba(36,26,21,0.06), 0 6px 20px -8px rgba(36,26,21,0.14);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: ui-monospace, "Cascadia Code", "Consolas", "SFMono-Regular", Menlo, monospace; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  .modenav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+  .modenav a { text-decoration: none; font-family: ui-monospace, monospace; font-size: 12px; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); color: var(--ink-dim); }
+  .modenav a:hover { color: var(--ink); }
+  .modenav a.active { background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+
+  header { margin-bottom: 48px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.16em; color: var(--accent-ink); text-transform: uppercase; margin: 0 0 14px; }
+  h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.25; margin: 0 0 12px; text-wrap: balance; letter-spacing: -0.01em; }
+  .subtitle { color: var(--ink-dim); font-size: 16px; max-width: 62ch; margin: 0 0 22px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { font-family: ui-monospace, "Cascadia Code", "Consolas", monospace; font-size: 12.5px; padding: 5px 11px; border-radius: 100px; border: 1px solid transparent; white-space: nowrap; }
+
+  section { margin-bottom: 56px; }
+  h2 { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 18px; font-weight: 600; }
+  h3 { font-size: 18px; margin: 0 0 6px; letter-spacing: -0.005em; }
+  p { margin: 0 0 12px; }
+
+  .callout { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 14px 18px; border-radius: 0 8px 8px 0; font-size: 14.5px; color: var(--ink); }
+  .callout b { color: var(--accent-ink); }
+  .callout + .callout { margin-top: 12px; }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  thead th { font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td.layer { font-weight: 600; white-space: nowrap; }
+  .code { font-family: ui-monospace, "Cascadia Code", "Consolas", monospace; font-size: 13px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; }
+
+  .checklist { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); }
+  .checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 18px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .box { flex: none; width: 16px; height: 16px; margin-top: 3px; border-radius: 4px; border: 1.5px solid var(--ink-faint); }
+
+  .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  .timeline { position: relative; }
+  .phase { position: relative; display: grid; grid-template-columns: 92px 1fr; gap: 20px; padding-bottom: 30px; }
+  .phase::before { content: ""; position: absolute; left: 45px; top: 6px; bottom: -30px; width: 1px; background: var(--border); }
+  .phase:last-child::before { display: none; }
+  .phase-week { position: relative; padding-top: 2px; text-align: right; font-family: ui-monospace, monospace; font-size: 12.5px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .phase-week .marker { position: absolute; right: -24.5px; top: 3px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--border); }
+  .phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .phase-tag { display: inline-block; font-size: 11px; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 100px; margin-bottom: 10px; font-weight: 600; }
+  .deliverable { font-size: 13.5px; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 12px; }
+  .deliverable b { color: var(--ink); font-weight: 600; }
+
+  footer { color: var(--ink-faint); font-size: 12.5px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) {
+    .checklist-grid { grid-template-columns: 1fr; }
+    .phase { grid-template-columns: 56px 1fr; gap: 12px; }
+    .phase::before { left: 25px; }
+    .phase-week .marker { right: -14.5px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <nav class="modenav">
+    <a href="../study-mode/index.html">① Study Mode</a>
+    <a href="../practice-mode/index.html">② Practice Mode</a>
+    <a class="active" href="index.html">③ Development Mode</a>
+  </nav>
+
+  <header>
+    <p class="eyebrow mono">DEVELOPMENT MODE · 3 WEEKS · 실전 제작</p>
+    <h1>실전 홈페이지 제작</h1>
+    <p class="subtitle">Practice Mode에서 구조와 기능을 검증한 뒤, 실제 회사 데이터와 실제 도메인으로 프로덕션 홈페이지를 제작합니다. 패턴은 이미 검증했으므로 설명보다 <b>실행 속도</b>에 집중합니다.</p>
+    <div class="pill-row">
+      <span class="pill" style="background:var(--cat-deploy-soft); color:var(--cat-deploy);">실제 데이터</span>
+      <span class="pill" style="background:var(--cat-fe-soft); color:var(--cat-fe);">실제 도메인</span>
+      <span class="pill" style="background:var(--cat-be-soft); color:var(--cat-be);">Practice 코드 재사용</span>
+      <span class="pill" style="background:var(--cat-setup-soft); color:var(--cat-setup);">3주 축소 로드맵</span>
+    </div>
+  </header>
+
+  <section>
+    <h2>시작 조건</h2>
+    <div class="callout"><b>Practice Mode의 Definition of Done</b>이 모두 충족된 상태에서 시작합니다 — 더미 데이터 기준 7페이지·2폼·다운로드가 스테이징에서 전부 동작하고, 핵심 로직을 스스로 설명할 수 있어야 합니다.</div>
+  </section>
+
+  <section>
+    <h2>Practice → Development 이관 전략</h2>
+    <div class="callout">
+      <b>추천: Practice Mode 코드베이스를 복사해 새 프로젝트로 시작 → 더미 데이터를 실제 데이터로 교체.</b><br>
+      이미 동작이 검증된 구조(스키마, Server Action, 파일 업로드, 이메일 발송)를 재사용하는 편이 처음부터 다시 짜는 것보다 빠르고 안전합니다. Claude Code에게 "practice-mode 코드를 development-mode로 옮기면서 더미 데이터/문구만 실제 값으로 교체해줘"라고 맡길 수 있습니다.
+    </div>
+  </section>
+
+  <section>
+    <h2>실전 준비 체크리스트</h2>
+    <div class="checklist-grid">
+      <div>
+        <h3 style="font-size:14px; margin-bottom:8px;">실제 콘텐츠</h3>
+        <ul class="checklist">
+          <li><span class="box"></span>회사소개 문구, 연혁, 비전/미션</li>
+          <li><span class="box"></span>로고, 대표 이미지</li>
+          <li><span class="box"></span>사업분야별 소개 문구</li>
+          <li><span class="box"></span>제품 목록·사양·이미지</li>
+          <li><span class="box"></span>카탈로그·데이터시트 PDF</li>
+          <li><span class="box"></span>실제 담당자 연락처·수신 이메일</li>
+          <li><span class="box"></span>사업자 정보(상호·사업자등록번호·주소 — 푸터용)</li>
+          <li><span class="box"></span>개인정보처리방침 문구</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="font-size:14px; margin-bottom:8px;">실전 전환 작업</h3>
+        <ul class="checklist">
+          <li><span class="box"></span>실제 도메인 구매/연결, HTTPS 확인</li>
+          <li><span class="box"></span>이메일 발신 도메인 인증(Resend 등)</li>
+          <li><span class="box"></span>Neon/Vercel 프로덕션 프로젝트를 Practice와 분리 생성</li>
+          <li><span class="box"></span>지도 API(카카오·네이버) 실제 키 발급 및 도메인 등록</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3주 로드맵</h2>
+    <div class="timeline">
+
+      <div class="phase">
+        <div class="phase-week">1주차<div class="marker" style="background:var(--cat-fe);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-fe-soft); color:var(--cat-fe);">이관</span>
+          <h3>코드 이관 &amp; 정적 콘텐츠</h3>
+          <p style="font-size:14.5px; margin:0;">practice-mode 코드 이관, 회사소개·사업분야 등 실제 정적 콘텐츠 반영</p>
+          <div class="deliverable"><b>산출물</b> — 실제 콘텐츠 기준 정적 페이지</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">2주차<div class="marker" style="background:var(--cat-be);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-be-soft); color:var(--cat-be);">실데이터</span>
+          <h3>제품·폼 실사용 테스트</h3>
+          <p style="font-size:14.5px; margin:0;">실제 제품·자료 데이터 입력, 폼 실사용 테스트(실제 이메일 수신 확인), 개인정보처리방침 페이지 추가</p>
+          <div class="deliverable"><b>산출물</b> — 전 기능이 실제 데이터로 동작</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">3주차<div class="marker" style="background:var(--cat-deploy);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-deploy-soft); color:var(--cat-deploy);">런칭</span>
+          <h3>QA &amp; 배포</h3>
+          <p style="font-size:14.5px; margin:0;">최종 QA(반응형·SEO·성능), 도메인 연결 및 런칭</p>
+          <div class="deliverable"><b>산출물</b> — 실제 도메인으로 서비스되는 회사 홈페이지</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>런칭 후 체크리스트</h2>
+    <ul class="checklist">
+      <li><span class="box"></span><span class="code">.env</span> 프로덕션 값과 시크릿을 실전용 Vercel 프로젝트에 등록</li>
+      <li><span class="box"></span><span class="code">/api/health</span> 헬스체크 라우트 배포 후 확인</li>
+      <li><span class="box"></span>DB 커넥션 풀(Neon pooler) 설정 확인</li>
+      <li><span class="box"></span>로그/에러 모니터링 연결</li>
+      <li><span class="box"></span>커스텀 도메인 HTTPS 자동 적용 확인</li>
+      <li><span class="box"></span>문의·샘플요청 데이터 백업/보관 정책 정하기(개인정보 보관기간 포함)</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>유지보수 계획</h2>
+    <div class="callout">콘텐츠(제품 추가, 자료 갱신 등) 변경이 잦아지면 그때 간단한 관리자 화면 도입을 검토합니다. 그 전까지는 Claude Code로 코드를 직접 수정하는 방식으로도 충분합니다.</div>
+  </section>
+
+  <footer><a href="../study-mode/index.html" style="color:var(--ink-faint);">Study Mode</a> · <a href="../practice-mode/index.html" style="color:var(--ink-faint);">Practice Mode</a> · Development Mode</footer>
+
+</div>

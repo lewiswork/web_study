@@ -1,0 +1,425 @@
+<title>Study Mode — 풀스택 웹 개발 스터디 로드맵</title>
+<style>
+  :root {
+    --bg: #f2f5f2;
+    --surface: #ffffff;
+    --surface-2: #eaeee8;
+    --ink: #17221d;
+    --ink-dim: #52625a;
+    --ink-faint: #7c8d83;
+    --border: #d9e0d8;
+    --accent: #b5672b;
+    --accent-ink: #7a4419;
+    --accent-soft: #f3e3d3;
+
+    --cat-setup: #6b5b8f;
+    --cat-setup-soft: #ece8f4;
+    --cat-fe: #2f7a8c;
+    --cat-fe-soft: #e2eef1;
+    --cat-be: #5c7a3d;
+    --cat-be-soft: #eaf0e0;
+    --cat-db: #3a5a78;
+    --cat-db-soft: #e3e9ef;
+    --cat-test: #8a4f6b;
+    --cat-test-soft: #f2e5eb;
+    --cat-deploy: #b5672b;
+    --cat-deploy-soft: #f3e3d3;
+
+    --shadow: 0 1px 2px rgba(23,34,29,0.06), 0 6px 20px -8px rgba(23,34,29,0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10140f; --surface: #171d17; --surface-2: #1e251e;
+      --ink: #e8ede6; --ink-dim: #aab7ab; --ink-faint: #7c8a7e; --border: #2b332a;
+      --accent: #dd9457; --accent-ink: #f3d3ac; --accent-soft: #3a2c1c;
+      --cat-setup: #a698d0; --cat-setup-soft: #26223a;
+      --cat-fe: #6fb9cc; --cat-fe-soft: #17282b;
+      --cat-be: #9bc26e; --cat-be-soft: #1f2618;
+      --cat-db: #7fa5c9; --cat-db-soft: #1a2530;
+      --cat-test: #cc8aab; --cat-test-soft: #2b1e26;
+      --cat-deploy: #dd9457; --cat-deploy-soft: #3a2c1c;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #10140f; --surface: #171d17; --surface-2: #1e251e;
+    --ink: #e8ede6; --ink-dim: #aab7ab; --ink-faint: #7c8a7e; --border: #2b332a;
+    --accent: #dd9457; --accent-ink: #f3d3ac; --accent-soft: #3a2c1c;
+    --cat-setup: #a698d0; --cat-setup-soft: #26223a;
+    --cat-fe: #6fb9cc; --cat-fe-soft: #17282b;
+    --cat-be: #9bc26e; --cat-be-soft: #1f2618;
+    --cat-db: #7fa5c9; --cat-db-soft: #1a2530;
+    --cat-test: #cc8aab; --cat-test-soft: #2b1e26;
+    --cat-deploy: #dd9457; --cat-deploy-soft: #3a2c1c;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -8px rgba(0,0,0,0.5);
+  }
+  :root[data-theme="light"] {
+    --bg: #f2f5f2; --surface: #ffffff; --surface-2: #eaeee8;
+    --ink: #17221d; --ink-dim: #52625a; --ink-faint: #7c8d83; --border: #d9e0d8;
+    --accent: #b5672b; --accent-ink: #7a4419; --accent-soft: #f3e3d3;
+    --cat-setup: #6b5b8f; --cat-setup-soft: #ece8f4;
+    --cat-fe: #2f7a8c; --cat-fe-soft: #e2eef1;
+    --cat-be: #5c7a3d; --cat-be-soft: #eaf0e0;
+    --cat-db: #3a5a78; --cat-db-soft: #e3e9ef;
+    --cat-test: #8a4f6b; --cat-test-soft: #f2e5eb;
+    --cat-deploy: #b5672b; --cat-deploy-soft: #f3e3d3;
+    --shadow: 0 1px 2px rgba(23,34,29,0.06), 0 6px 20px -8px rgba(23,34,29,0.12);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: ui-monospace, "Cascadia Code", "Consolas", "SFMono-Regular", Menlo, monospace; }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  /* mode nav */
+  .modenav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+  .modenav a {
+    text-decoration: none; font-family: ui-monospace, monospace; font-size: 12px;
+    padding: 6px 12px; border-radius: 8px; border: 1px solid var(--border); color: var(--ink-dim);
+  }
+  .modenav a:hover { color: var(--ink); }
+  .modenav a.active { background: var(--accent-soft); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+
+  header { margin-bottom: 48px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.16em; color: var(--accent-ink); text-transform: uppercase; margin: 0 0 14px; }
+  h1 { font-size: clamp(26px, 4vw, 36px); line-height: 1.25; margin: 0 0 12px; text-wrap: balance; letter-spacing: -0.01em; }
+  .subtitle { color: var(--ink-dim); font-size: 16px; max-width: 62ch; margin: 0 0 22px; }
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill { font-family: ui-monospace, "Cascadia Code", "Consolas", monospace; font-size: 12.5px; padding: 5px 11px; border-radius: 100px; border: 1px solid transparent; white-space: nowrap; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 36px 0 56px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 16px 14px; box-shadow: var(--shadow); }
+  .stat-num { font-family: ui-monospace, "Cascadia Code", "Consolas", monospace; font-size: 21px; font-variant-numeric: tabular-nums; color: var(--accent-ink); margin-bottom: 4px; }
+  .stat-label { font-size: 12.5px; color: var(--ink-dim); }
+
+  section { margin-bottom: 56px; }
+  h2 { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); margin: 0 0 18px; font-weight: 600; }
+  h3 { font-size: 18px; margin: 0 0 6px; letter-spacing: -0.005em; }
+  p { margin: 0 0 12px; }
+
+  .table-scroll { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 640px; font-size: 14.5px; }
+  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  thead th { font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); font-weight: 600; background: var(--surface-2); }
+  tbody tr:last-child td { border-bottom: none; }
+  td.layer { font-weight: 600; white-space: nowrap; }
+  td.note { color: var(--ink-dim); font-size: 13.5px; }
+  .code { font-family: ui-monospace, "Cascadia Code", "Consolas", monospace; font-size: 13px; background: var(--surface-2); padding: 1px 6px; border-radius: 4px; }
+
+  .callout { margin-top: 14px; border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 14px; color: var(--ink); }
+  .callout b { color: var(--accent-ink); }
+
+  .mcp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .mcp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); }
+  .mcp-name { font-family: ui-monospace, monospace; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--ink); }
+  .mcp-when { display: inline-block; font-size: 11px; letter-spacing: 0.03em; color: var(--cat-db); background: var(--cat-db-soft); padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; }
+  .mcp-desc { font-size: 13.5px; color: var(--ink-dim); margin: 0; }
+
+  .timeline { position: relative; }
+  .phase { position: relative; display: grid; grid-template-columns: 92px 1fr; gap: 20px; padding-bottom: 30px; }
+  .phase::before { content: ""; position: absolute; left: 45px; top: 6px; bottom: -30px; width: 1px; background: var(--border); }
+  .phase:last-child::before { display: none; }
+  .phase-week { position: relative; padding-top: 2px; text-align: right; font-family: ui-monospace, monospace; font-size: 12.5px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .phase-week .marker { position: absolute; right: -24.5px; top: 3px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--border); }
+  .phase-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; box-shadow: var(--shadow); }
+  .phase-tag { display: inline-block; font-size: 11px; letter-spacing: 0.04em; padding: 3px 9px; border-radius: 100px; margin-bottom: 10px; font-weight: 600; }
+  .phase-card ul { margin: 10px 0 12px; padding-left: 18px; }
+  .phase-card li { margin-bottom: 5px; font-size: 14.5px; }
+  .deliverable { font-size: 13.5px; color: var(--ink-dim); border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 12px; }
+  .deliverable b { color: var(--ink); font-weight: 600; }
+
+  .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px; box-shadow: var(--shadow); position: relative; }
+  .project-card.recommended { border-color: var(--accent); }
+  .rec-badge { position: absolute; top: -10px; right: 14px; background: var(--accent); color: var(--surface); font-size: 11px; padding: 2px 9px; border-radius: 100px; font-weight: 600; }
+  .project-card h4 { margin: 0 0 6px; font-size: 15px; }
+  .project-card p { font-size: 13.5px; color: var(--ink-dim); margin: 0; }
+
+  .checklist { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); }
+  .checklist li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 18px; font-size: 14.5px; border-bottom: 1px solid var(--border); }
+  .checklist li:last-child { border-bottom: none; }
+  .box { flex: none; width: 16px; height: 16px; margin-top: 3px; border-radius: 4px; border: 1.5px solid var(--ink-faint); }
+
+  .tips { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; box-shadow: var(--shadow); }
+  .tips ul { margin: 0; padding-left: 18px; }
+  .tips li { margin-bottom: 8px; font-size: 14.5px; }
+
+  footer { color: var(--ink-faint); font-size: 12.5px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 640px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .mcp-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+    .phase { grid-template-columns: 56px 1fr; gap: 12px; }
+    .phase::before { left: 25px; }
+    .phase-week .marker { right: -14.5px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <nav class="modenav">
+    <a class="active" href="index.html">① Study Mode</a>
+    <a href="../practice-mode/index.html">② Practice Mode</a>
+    <a href="../development-mode/index.html">③ Development Mode</a>
+  </nav>
+
+  <header>
+    <p class="eyebrow mono">STUDY MODE · 12 WEEKS</p>
+    <h1>풀스택 웹 개발 스터디 로드맵</h1>
+    <p class="subtitle">Next.js(React + Node.js) 풀스택 조합과 PostgreSQL을 축으로, Claude Code와 MCP를 짝 프로그래머 삼아 설계부터 배포까지 완주하는 12주 학습 계획. 여기서 배운 스킬은 Practice Mode·Development Mode에서 그대로 재사용합니다.</p>
+    <div class="pill-row">
+      <span class="pill" style="background:var(--cat-fe-soft); color:var(--cat-fe);">Next.js · React UI</span>
+      <span class="pill" style="background:var(--cat-be-soft); color:var(--cat-be);">Next.js · Server(Node.js)</span>
+      <span class="pill" style="background:var(--cat-db-soft); color:var(--cat-db);">Database · PostgreSQL</span>
+      <span class="pill" style="background:var(--cat-setup-soft); color:var(--cat-setup);">Claude Code MCP</span>
+      <span class="pill" style="background:var(--cat-deploy-soft); color:var(--cat-deploy);">Hosting · Vercel</span>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num">12<span style="font-size:13px;">주</span></div><div class="stat-label">전체 기간</div></div>
+    <div class="stat"><div class="stat-num">주 2–3<span style="font-size:13px;">회</span></div><div class="stat-label">권장 학습 주기</div></div>
+    <div class="stat"><div class="stat-num">4<span style="font-size:13px;">종</span></div><div class="stat-label">연동할 MCP 서버</div></div>
+    <div class="stat"><div class="stat-num">1<span style="font-size:13px;">개</span></div><div class="stat-label">실제 배포된 서비스</div></div>
+  </div>
+
+  <section>
+    <h2>기술 스택 결정 — Next.js 풀스택</h2>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>영역</th><th>선택</th><th>세부 옵션</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td class="layer">애플리케이션</td><td><span class="code">Next.js (App Router)</span> + TypeScript</td><td>React UI + Node.js 서버 로직이 한 프로젝트/한 배포에 통합</td><td class="note">Route Handler·Server Action이 곧 백엔드, 별도 Express 서버 불필요</td></tr>
+          <tr><td class="layer">스타일링</td><td><span class="code">TailwindCSS</span></td><td>+ <span class="code">shadcn/ui</span> 컴포넌트</td><td class="note">디자인 시스템·컴포넌트 재사용 학습에 유리</td></tr>
+          <tr><td class="layer">데이터 패칭</td><td>Server Component에서 직접 조회</td><td>클라이언트 상호작용에는 <span class="code">TanStack Query</span>, 로컬 상태는 <span class="code">Zustand</span></td><td class="note">초기 로딩은 서버에서, 이후 갱신만 클라이언트에서 처리하는 패턴</td></tr>
+          <tr><td class="layer">서버 로직</td><td>Route Handler(<span class="code">app/api</span>) / Server Action</td><td>외부에 노출할 API는 Route Handler, 폼 제출 등 내부용은 Server Action</td><td class="note">REST 설계 원칙(상태코드·에러 포맷)은 Route Handler에도 동일 적용</td></tr>
+          <tr><td class="layer">ORM</td><td><span class="code">Prisma</span></td><td>또는 <span class="code">Drizzle ORM</span></td><td class="note">Prisma: 생산성·문서화 / Drizzle: 가볍고 SQL에 가까움</td></tr>
+          <tr><td class="layer">Database</td><td>PostgreSQL</td><td><span class="code">Neon</span> 또는 <span class="code">Supabase</span> (서버리스 Postgres)</td><td class="note">로컬 개발 후 그대로 클라우드로 이전 쉬움</td></tr>
+          <tr><td class="layer">인증</td><td><span class="code">Auth.js</span> (NextAuth)</td><td>세션/미들웨어가 App Router와 바로 통합됨</td><td class="note">직접 JWT 구현보다 Next.js와의 궁합이 좋아 기본안으로 격상</td></tr>
+          <tr><td class="layer">테스트</td><td><span class="code">Vitest</span></td><td>+ <span class="code">Playwright</span>(E2E)</td><td class="note">Route Handler·Server Action 모두 동일 도구로 테스트</td></tr>
+          <tr><td class="layer">배포</td><td><span class="code">Vercel</span> 하나로 통합</td><td>DB만 <span class="code">Neon</span> / <span class="code">Supabase</span>로 분리</td><td class="note">프론트·백엔드 별도 배포가 필요 없어 구성이 단순함</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout"><b>왜 Next.js인가.</b> 프론트엔드와 백엔드를 하나의 배포 단위로 묶어 <b>인프라 구성을 단순화</b>하고, SSR·캐싱·로딩/에러 바운더리 같은 실무 패턴을 자연스럽게 익힐 수 있습니다. 대신 Route Handler와 Server Action 중 무엇을 언제 쓸지 판단하는 감각이 별도로 필요합니다 — 4–5주차, 7–8주차에서 집중적으로 다룹니다.</div>
+  </section>
+
+  <section>
+    <h2>Claude Code MCP 활용 계획</h2>
+    <p style="color:var(--ink-dim); font-size:14.5px;">전 구간에서 Claude Code를 짝 프로그래머로 쓰되, MCP 서버로 실제 환경(DB·저장소·브라우저)에 직접 연결해 "물어보고 → 바로 확인"하는 루프를 만듭니다.</p>
+    <div class="mcp-grid">
+      <div class="mcp-card">
+        <div class="mcp-name">Postgres MCP</div>
+        <span class="mcp-when">DB · 통합 주차 핵심</span>
+        <p class="mcp-desc">로컬/클라우드 Postgres에 직접 연결해 스키마 확인, 쿼리 실행, 마이그레이션 결과를 대화 안에서 바로 검증합니다.</p>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-name">GitHub MCP</div>
+        <span class="mcp-when">전 구간 상시</span>
+        <p class="mcp-desc">이슈·PR 생성과 브랜치 관리를 맡겨 주차별 진행 기록을 커밋/PR 단위로 남깁니다.</p>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-name">Playwright MCP</div>
+        <span class="mcp-when">테스트·통합 주차</span>
+        <p class="mcp-desc">실제 브라우저를 띄워 화면을 확인하고, 회원가입~핵심 기능 시나리오를 E2E로 직접 실행합니다.</p>
+      </div>
+      <div class="mcp-card">
+        <div class="mcp-name">Filesystem (기본 내장)</div>
+        <span class="mcp-when">전 구간 상시</span>
+        <p class="mcp-desc">프로젝트 구조 탐색과 리팩터링에 사용. 별도 설치 없이 바로 사용 가능합니다.</p>
+      </div>
+    </div>
+    <div class="callout">0주차에 <span class="code">claude mcp add</span>로 Postgres·GitHub MCP를 먼저 등록하고, <span class="code">.mcp.json</span>을 리포지토리에 커밋해두면 설정을 그대로 공유·재사용할 수 있습니다.</div>
+  </section>
+
+  <section>
+    <h2>12주 로드맵</h2>
+    <div class="timeline">
+
+      <div class="phase">
+        <div class="phase-week">0주차<div class="marker" style="background:var(--cat-setup);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-setup-soft); color:var(--cat-setup);">SETUP</span>
+          <h3>환경 구성 &amp; MCP 연결</h3>
+          <ul>
+            <li>Node.js LTS, pnpm, PostgreSQL(로컬 또는 Docker) 설치</li>
+            <li><span class="code">create-next-app</span>로 TypeScript + Tailwind + App Router 프로젝트 생성</li>
+            <li>GitHub 리포지토리 생성, 브랜치 전략(main + feature) 확정</li>
+            <li>Claude Code 설치 후 Postgres MCP · GitHub MCP 등록</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — Next.js 프로젝트 스캐폴딩 + MCP 연결 확인</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">1–2주차<div class="marker" style="background:var(--cat-fe);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-fe-soft); color:var(--cat-fe);">FRONTEND</span>
+          <h3>Next.js UI 기초</h3>
+          <ul>
+            <li>컴포넌트/props/state, 이벤트 처리, 리스트 렌더링</li>
+            <li>App Router 파일 기반 라우팅, <span class="code">layout.tsx</span>로 공통 레이아웃 구성</li>
+            <li>Server Component와 Client Component(<span class="code">"use client"</span>) 구분 기준 익히기</li>
+            <li>TailwindCSS로 레이아웃 스타일링</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 정적 데이터로 동작하는 UI (예: 게시글 목록/상세)</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">3주차<div class="marker" style="background:var(--cat-fe);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-fe-soft); color:var(--cat-fe);">FRONTEND</span>
+          <h3>데이터 패칭 &amp; 폼</h3>
+          <ul>
+            <li>Server Component에서 <span class="code">async/await</span>로 직접 데이터 조회하는 패턴</li>
+            <li>클라이언트 상호작용이 필요한 부분만 TanStack Query 도입</li>
+            <li>React Hook Form + Zod로 폼 검증, 필요 시 Zustand로 전역 상태 도입</li>
+            <li><span class="code">loading.tsx</span> / <span class="code">error.tsx</span>로 라우트 단위 로딩·에러 UI 구성</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 폼 제출·검증이 되는 화면, 로딩/에러 상태 처리</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">4–5주차<div class="marker" style="background:var(--cat-be);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-be-soft); color:var(--cat-be);">SERVER</span>
+          <h3>Next.js 서버 로직</h3>
+          <ul>
+            <li>Route Handler(<span class="code">app/api</span>)와 Server Action의 역할 구분</li>
+            <li>REST API 설계(리소스, 상태코드, 에러 응답 포맷 통일)</li>
+            <li>요청 검증(Zod), 미들웨어(<span class="code">middleware.ts</span>), 환경변수 관리</li>
+            <li>Auth.js로 인증/인가 연결, 비밀번호 해싱(bcrypt)</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 인증 흐름 + 리소스 CRUD (DB 연결 전, 목업 데이터)</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">6주차<div class="marker" style="background:var(--cat-db);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-db-soft); color:var(--cat-db);">DATABASE</span>
+          <h3>PostgreSQL 설계</h3>
+          <ul>
+            <li>테이블 설계, 정규화, 관계(1:N, N:M), 인덱스</li>
+            <li>Prisma(또는 Drizzle) 스키마 정의 및 마이그레이션</li>
+            <li>Postgres MCP로 Claude Code에서 직접 쿼리하며 스키마 검증</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — ERD + 마이그레이션 적용된 실제 DB</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">7–8주차<div class="marker" style="background:var(--cat-be);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-be-soft); color:var(--cat-be);">INTEGRATION</span>
+          <h3>풀스택 통합</h3>
+          <ul>
+            <li>Server Component/Action에서 실제 DB(Prisma) 직접 호출로 교체</li>
+            <li>Auth.js로 로그인 → 세션 → 보호된 라우트(middleware)까지 인증 흐름 전체 연결</li>
+            <li>Next.js 캐싱/재검증(<span class="code">revalidatePath</span> 등) 개념 이해</li>
+            <li>페이지네이션, 검색 등 실사용 기능 보강</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 하나의 Next.js 프로젝트로 완결되는 풀스택 앱(로컬 환경)</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">9주차<div class="marker" style="background:var(--cat-test);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-test-soft); color:var(--cat-test);">TESTING</span>
+          <h3>테스트 자동화</h3>
+          <ul>
+            <li>Vitest로 유닛 테스트(유틸/훅/컴포넌트)</li>
+            <li>supertest 등으로 API 통합 테스트</li>
+            <li>Playwright MCP로 회원가입~핵심 기능 E2E 시나리오 실행</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 핵심 플로우 테스트 스위트 + CI 자동 실행 연결</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">10–11주차<div class="marker" style="background:var(--cat-deploy);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-deploy-soft); color:var(--cat-deploy);">DEPLOY</span>
+          <h3>CI/CD &amp; 호스팅</h3>
+          <ul>
+            <li>GitHub Actions로 린트/테스트 자동 실행 CI 구성</li>
+            <li>DB: Neon 또는 Supabase에 프로덕션 Postgres 생성</li>
+            <li>앱 전체(프론트+서버)를 Vercel 하나에 배포 — 별도 백엔드 서버 배포 불필요</li>
+            <li>환경변수 등록, main 브랜치 push 시 자동 배포(CD) 확인</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 실제 URL로 접속 가능한 서비스</div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-week">12주차<div class="marker" style="background:var(--cat-setup);"></div></div>
+        <div class="phase-card">
+          <span class="phase-tag" style="background:var(--cat-setup-soft); color:var(--cat-setup);">WRAP-UP</span>
+          <h3>종합 정리 &amp; 회고</h3>
+          <ul>
+            <li>12주 동안 만든 기능을 하나의 미니 프로젝트로 정리</li>
+            <li>README(설치법·아키텍처·배포 URL) 및 회고 문서 작성</li>
+            <li>다음 스텝 결정(실시간 기능, 모바일 대응, 성능 최적화 등)</li>
+          </ul>
+          <div class="deliverable"><b>산출물</b> — 완성된 포트폴리오 프로젝트 + 회고 문서</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>미니 프로젝트 후보</h2>
+    <div class="project-grid">
+      <div class="project-card recommended">
+        <span class="rec-badge">추천</span>
+        <h4>스터디 그룹 게시판</h4>
+        <p>인증, 댓글(1:N 관계), 검색/페이지네이션까지 이 로드맵의 모든 주차를 자연스럽게 관통하는 범위. 지금 진행하는 스터디 자체를 위한 도구로도 쓸 수 있음.</p>
+      </div>
+      <div class="project-card">
+        <h4>할 일/프로젝트 보드</h4>
+        <p>보드–카드–라벨의 N:M 관계와 드래그앤드롭 UI까지 다루고 싶다면. 프론트엔드 상호작용 비중이 큼.</p>
+      </div>
+      <div class="project-card">
+        <h4>북마크 아카이브</h4>
+        <p>외부 API 연동(URL 메타데이터 크롤링)과 태그(N:M) 검색을 경험하고 싶다면. 백엔드 통합 난이도가 조금 더 높음.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>배포 전 체크리스트</h2>
+    <ul class="checklist">
+      <li><span class="box"></span>.env 값을 프로덕션/개발로 분리하고, 시크릿은 Vercel 프로젝트 설정에 직접 등록</li>
+      <li><span class="box"></span>같은 Vercel 배포 안이라 CORS는 대부분 불필요 — 외부에 API를 별도 공개할 때만 설정</li>
+      <li><span class="box"></span>DB 커넥션 풀 설정 확인 (서버리스 환경이므로 Prisma pooling/Neon pooler 옵션 점검)</li>
+      <li><span class="box"></span><span class="code">/api/health</span> 헬스체크 라우트를 만들어 배포 후 확인</li>
+      <li><span class="box"></span>최소 1개의 로그/에러 모니터링 연결 (초기엔 플랫폼 자체 로그로도 충분)</li>
+      <li><span class="box"></span>커스텀 도메인 연결 시 HTTPS 자동 적용 여부 확인</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>진행 팁</h2>
+    <div class="tips">
+      <ul>
+        <li>매 주차 시작 전 Claude Code에게 "이번 주차 목표"를 프롬프트로 주고 계획을 먼저 검토받기</li>
+        <li>막힐 때는 코드를 먼저 복붙하기보다 에러 메시지를 그대로 붙여넣고 원인부터 질문하기</li>
+        <li>Postgres MCP로 "이 쿼리 결과가 왜 이렇게 나왔는지"를 그 자리에서 바로 확인하는 습관 들이기</li>
+        <li>짧게라도 매주 회고를 남기면 12주차 종합 프로젝트 정리 때 그대로 재사용 가능</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Study Mode · <a href="../practice-mode/index.html" style="color:var(--ink-faint);">Practice Mode</a> · <a href="../development-mode/index.html" style="color:var(--ink-faint);">Development Mode</a>와 병행 진행</footer>
+
+</div>
