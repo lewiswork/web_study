@@ -1,6 +1,7 @@
 import BrandLogo from "@/components/BrandLogo";
 import Hero from "@/components/Hero";
 import CtaButtons from "@/components/CtaButtons";
+import Counter from "@/components/Counter";
 
 const ctaLinks = [
   {
@@ -44,6 +45,7 @@ export default function Home() {
           }
         />
         <CtaButtons links={ctaLinks} />
+        <Counter />
       </main>
     </div>
   );
