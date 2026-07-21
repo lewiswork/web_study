@@ -1,4 +1,5 @@
 import { getPosts } from "@/lib/posts";
+import PostsRefresh from "@/components/PostsRefresh";
 
 export default async function PostsPage() {
   const posts = await getPosts();
@@ -35,6 +36,8 @@ export default async function PostsPage() {
             </li>
           ))}
         </ul>
+
+        <PostsRefresh />
       </main>
     </div>
   );
