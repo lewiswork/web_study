@@ -1,7 +1,4 @@
-const fields = [
-  { label: "Name", type: "text", placeholder: "Ada Lovelace" },
-  { label: "Email", type: "email", placeholder: "ada@example.com" },
-];
+import ContactForm from "@/components/ContactForm";
 
 export default function Contact() {
   return (
@@ -24,26 +21,7 @@ export default function Contact() {
           </p>
         </div>
 
-        <form className="flex max-w-sm flex-col gap-4 rounded-2xl border border-zinc-200 p-6 shadow-sm dark:border-zinc-800">
-          {fields.map((field) => (
-            <label key={field.label} className="flex flex-col gap-1.5 text-sm">
-              <span className="font-medium text-black dark:text-zinc-50">
-                {field.label}
-              </span>
-              <input
-                type={field.type}
-                placeholder={field.placeholder}
-                className="rounded-lg border border-zinc-200 px-3 py-2 text-sm text-black outline-none placeholder:text-zinc-400 focus:border-black focus:ring-1 focus:ring-black dark:border-zinc-800 dark:text-zinc-50 dark:focus:border-white dark:focus:ring-white"
-              />
-            </label>
-          ))}
-          <button
-            type="button"
-            className="mt-2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
-          >
-            Send message
-          </button>
-        </form>
+        <ContactForm />
       </main>
     </div>
   );
