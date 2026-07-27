@@ -1,17 +1,15 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
-const contactSchema = z.object({
-  name: z.string().trim().min(1, "이름을 입력해 주세요."),
-  email: z.email("올바른 이메일 형식이 아닙니다."),
-});
+import { contactSchema, type ContactFormValues } from "@/lib/contact";
 
-type ContactFormValues = z.infer<typeof contactSchema>;
+import { submitContact } from "@/app/contact/actions";
 
 export default function ContactForm() {
+  const [serverError, setServerError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -21,8 +19,11 @@ export default function ContactForm() {
   });
 
   const onSubmit = async (values: ContactFormValues) => {
-    // Server Action 연동은 4-5주차 몫 — 지금은 검증 흐름만 확인.
-    console.log("contact form submitted:", values);
+    setServerError(null);
+    const result = await submitContact(values);
+    if (!result.success) {
+      setServerError(result.error);
+    }
   };
 
   return (
@@ -71,9 +72,15 @@ export default function ContactForm() {
         {isSubmitting ? "Sending..." : "Send message"}
       </button>
 
-      {isSubmitSuccessful && (
+      {isSubmitSuccessful && !serverError && (
         <p className="text-sm text-green-600 dark:text-green-400">
-          메시지가 전송되었습니다. (콘솔 로그 확인용 목업)
+          메시지가 전송되었습니다. (서버 콘솔 로그 확인용 목업)
+        </p>
+      )}
+
+      {serverError && (
+        <p className="text-sm text-red-600 dark:text-red-400">
+          {serverError}
         </p>
       )}
     </form>
