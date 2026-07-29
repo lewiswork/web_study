@@ -35,3 +35,8 @@ export async function getPosts(): Promise<Post[]> {
   await delay(1200);
   return posts;
 }
+
+export async function getPostById(id: string): Promise<Post | undefined> {
+  await delay(1200);
+  return posts.find((post) => post.id === id);
+}
