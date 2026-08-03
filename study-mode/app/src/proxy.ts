@@ -1,21 +1,17 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { auth } from "@/auth";
 
-const SESSION_COOKIE = "study-session";
-
-export function proxy(request: NextRequest) {
+export default auth((request) => {
   console.log(`[proxy] ${request.method} ${request.nextUrl.pathname}`);
 
-  const hasSession = request.cookies.has(SESSION_COOKIE);
-
-  if (!hasSession) {
-    const url = new URL("/contact", request.url);
+  if (!request.auth) {
+    const url = new URL("/login", request.url);
     url.searchParams.set("reason", "auth-required");
     return NextResponse.redirect(url);
   }
 
   return NextResponse.next();
-}
+});
 
 export const config = {
   matcher: "/posts/:path*",

@@ -1,12 +1,36 @@
 import { getPosts } from "@/lib/posts";
 import PostsRefresh from "@/components/PostsRefresh";
+import { auth, signOut } from "@/auth";
 
 export default async function PostsPage() {
+  const session = await auth();
   const posts = await getPosts();
 
   return (
     <div className="flex flex-col flex-1 items-center bg-zinc-50 font-sans dark:bg-black">
       <main className="flex w-full max-w-3xl flex-1 flex-col gap-10 bg-white px-16 py-24 dark:bg-black">
+        <div className="flex items-center justify-between gap-4 rounded-lg border border-zinc-200 px-4 py-3 text-sm dark:border-zinc-800">
+          <p className="text-zinc-600 dark:text-zinc-400">
+            <span className="font-medium text-black dark:text-white">
+              {session?.user?.name}
+            </span>
+            님으로 로그인됨 (proxy.ts가 여기서 세션을 확인했습니다)
+          </p>
+          <form
+            action={async () => {
+              "use server";
+              await signOut({ redirectTo: "/login" });
+            }}
+          >
+            <button
+              type="submit"
+              className="rounded-md border border-zinc-300 px-3 py-1.5 text-sm hover:bg-zinc-100 dark:border-zinc-700 dark:hover:bg-zinc-900"
+            >
+              로그아웃
+            </button>
+          </form>
+        </div>
+
         <div className="flex flex-col gap-4">
           <h1 className="text-3xl font-semibold tracking-tight text-black dark:text-zinc-50">
             Posts
