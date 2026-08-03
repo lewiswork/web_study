@@ -31,9 +31,9 @@ function delay(ms: number) {
 }
 
 // 일부러 지연을 줘서 "조회가 끝날 때까지 응답이 늦어진다"를 체감할 수 있게 한다.
-export async function getPosts(): Promise<Post[]> {
+export async function getPosts(limit?: number): Promise<Post[]> {
   await delay(1200);
-  return posts;
+  return limit === undefined ? posts : posts.slice(0, limit);
 }
 
 export async function getPostById(id: string): Promise<Post | undefined> {
