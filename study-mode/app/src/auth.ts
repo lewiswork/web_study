@@ -1,10 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-
-// 데모용 하드코딩 계정 — 6주차에 실제 DB(Prisma+Postgres) 연결 후
-// authorize()가 db.users를 조회하도록 교체할 placeholder.
-const DEMO_USERNAME = "study";
-const DEMO_PASSWORD = "study1234";
+import bcrypt from "bcryptjs";
+import { prisma } from "@/lib/prisma";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [
@@ -15,12 +12,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       authorize: async (credentials) => {
         if (
-          credentials.username === DEMO_USERNAME &&
-          credentials.password === DEMO_PASSWORD
+          typeof credentials.username !== "string" ||
+          typeof credentials.password !== "string"
         ) {
-          return { id: "1", name: "Study User" };
+          return null;
         }
-        return null;
+
+        const user = await prisma.user.findUnique({
+          where: { username: credentials.username },
+        });
+        if (!user) return null;
+
+        const passwordMatches = await bcrypt.compare(
+          credentials.password,
+          user.passwordHash,
+        );
+        if (!passwordMatches) return null;
+
+        return { id: String(user.id), name: user.name };
       },
     }),
   ],
